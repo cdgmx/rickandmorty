@@ -20,7 +20,7 @@ const SCROLL_OFFSET = 300;
  * @param {Query | undefined} data - The data object from the GraphQL query.
  * @param {(options?: any) => void} fetchMore - The fetchMore function from Apollo Client.
  */
-const useInfiniteScroll = (
+export const useInfiniteScroll = (
   data: Query | undefined,
   fetchMore: (options?: any) => void,
 ) => {
