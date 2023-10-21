@@ -1,0 +1,42 @@
+name: Next.js CI/CD
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Type checking
+        run: npm run type-check
+
+      - name: Run tests
+        run: npm test
+
+      # Conditionally run end-to-end tests only for pull requests
+      - name: Run end-to-end tests
+        if: github.event_name == 'pull_request'
+        run: npm run e2e
+
+      - name: Build project
+        run: npm run build
