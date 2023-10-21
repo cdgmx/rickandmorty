@@ -23,3 +23,34 @@ export const GET_CHARACTER = gql`
     }
   }
 `;
+
+export const CHARACTERS_QUERY = gql`
+  query GetCharacters(
+    $page: Int!
+    $name: String
+    $status: String
+    $species: String
+    $type: String
+    $gender: String
+  ) {
+    characters(
+      page: $page
+      filter: {
+        name: $name
+        status: $status
+        species: $species
+        type: $type
+        gender: $gender
+      }
+    ) {
+      results {
+        id
+        name
+        image
+      }
+      info {
+        next
+      }
+    }
+  }
+`;
