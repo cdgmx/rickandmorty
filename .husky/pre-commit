@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run TypeScript check
+npx tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "TypeScript errors detected. Aborting commit."
+  exit 1
+fi
+
+# You can add other checks or scripts here if needed
