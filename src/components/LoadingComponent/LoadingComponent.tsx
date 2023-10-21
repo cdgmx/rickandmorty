@@ -7,6 +7,7 @@ const LoadingComponent = () => {
       flexDirection="column"
       alignItems="center"
       height="100vh"
+      data-testid="loading-component"
     >
       <img
         src="/images/portal.gif"
