@@ -1,8 +1,8 @@
 import React from 'react';
 import { CircularProgress, Grid, Box, Typography } from '@mui/material';
 import { Character } from '@/types';
-import CharacterCard from '../CharacterCard';
-import NoDataComponent from '../NoDataComponent';
+import CharacterCard from '@/components/CharacterCard';
+
 /**
  * @component CharacterList
  * @description Renders a list of Character cards.
