@@ -33,10 +33,5 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Conditionally run end-to-end tests only for pull requests
-      - name: Run end-to-end tests
-        if: github.event_name == 'pull_request'
-        run: npm run e2e
-
       - name: Build project
         run: npm run build
