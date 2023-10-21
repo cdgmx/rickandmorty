@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useInfiniteScroll } from './index';
+import { useInfiniteScroll } from '@/pages/index';
 
 describe('useInfiniteScroll', () => {
   let fetchMoreMock;

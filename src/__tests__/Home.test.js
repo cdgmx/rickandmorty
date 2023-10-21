@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
-import Home from './index';
+import Home from '@/pages/index';
 import { MockedProvider } from '@apollo/client/testing';
 import { GET_ALL_CHARACTERS } from '@/lib/queries';
 
