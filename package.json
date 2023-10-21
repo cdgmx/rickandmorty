@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watch",
-    "type-check": "tsc --noEmit",
-    "e2e": "cypress open"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.8.6",
@@ -33,7 +32,6 @@
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.5.5",
     "@types/react": "18.2.21",
-    "cypress": "^13.3.2",
     "eslint": "^8.52.0",
     "eslint-config-next": "^13.5.6",
     "jest": "29.6.4",
