@@ -2,13 +2,30 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import Home from '@/pages/index';
 import { MockedProvider } from '@apollo/client/testing';
-import { GET_ALL_CHARACTERS } from '@/lib/queries';
+import { CHARACTERS_QUERY } from '@/lib/queries';
+import { useRouter } from 'next/router';
+
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    route: '/',
+    pathname: '',
+    query: '',
+    asPath: '',
+    events: {
+      on: jest.fn(),
+      off: jest.fn(),
+      emit: jest.fn(),
+    },
+  }),
+}));
 
 const mocks = [
   {
     request: {
-      query: GET_ALL_CHARACTERS,
-      variables: { page: 1 },
+      query: CHARACTERS_QUERY,
+      variables: {
+        page: 1,
+      },
     },
     result: {
       data: {
