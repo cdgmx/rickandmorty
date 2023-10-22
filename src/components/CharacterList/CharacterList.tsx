@@ -1,21 +1,23 @@
 import React from 'react';
-import { CircularProgress, Grid, Box, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Character } from '@/types';
 import CharacterCard from '@/components/CharacterCard';
 
-/**
- * @component CharacterList
- * @description Renders a list of Character cards.
- * @param {Character[]} characters - Array of Character objects.
- */
-const CharacterList: React.FC<{ characters: Character[] }> = ({
+interface CharacterListProps {
+  characters: Character[];
+  loading: boolean;
+}
+
+const CharacterList: React.FC<CharacterListProps> = ({
   characters,
+  loading,
 }) => {
   return (
     <Grid container spacing={2}>
       {characters.map((character, index) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
           <CharacterCard
+            id={character.id || ''}
             title={character.name || ''}
             image={character.image || ''}
             secondaryText={character.species || ''}

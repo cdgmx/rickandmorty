@@ -10,7 +10,7 @@ import {
   DialogActions,
   Container,
 } from '@mui/material';
-
+import { useRouter } from 'next/router';
 import { CharacterCardProps } from './CharacterCard.types';
 import {
   StyledCard,
@@ -19,12 +19,14 @@ import {
   cardContentStyles,
   titleTypographyStyles,
 } from './CharacterCard.styles';
+import Link from 'next/link';
 // Global Constants
 const MAX_CARD_WIDTH = 200;
 const TRANSITION_DURATION_SHORT = '1s';
 const TRANSITION_DURATION_LONG = '5s';
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
+  id,
   image,
   title,
   secondaryText,
@@ -33,6 +35,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const textRef = useRef<HTMLDivElement>(null); // Added type for ref
+  const router = useRouter();
 
   useEffect(() => {
     if (textRef.current) {
@@ -50,14 +53,21 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     }
   }, [isHovered]);
 
+  const handleCardClick = () => {
+    router.push(`/characters/${id}`);
+  };
+
   return (
     <StyledCard>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleCardClick()}>
         <CardMedia
           component="img"
           image={image}
           alt={title}
-          onClick={() => setOpen(true)}
+          onClick={event => {
+            event.stopPropagation(); // Prevent event from propagating to parent
+            setOpen(true);
+          }}
           sx={cardMediaStyles}
         />
         <CardContent
@@ -65,14 +75,16 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
           onMouseLeave={() => setIsHovered(false)}
           sx={cardContentStyles}
         >
-          <Typography
-            variant="h5"
-            component="div"
-            sx={titleTypographyStyles}
-            ref={textRef}
-          >
-            {title}
-          </Typography>
+          <Link href={`/characters/${id}`}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={titleTypographyStyles}
+              ref={textRef}
+            >
+              {title}
+            </Typography>
+          </Link>
           <Typography variant="subtitle1" color="textSecondary">
             {secondaryText}
           </Typography>

@@ -13,11 +13,14 @@ import { ParsedUrlQuery } from 'querystring';
 import { useRouter } from 'next/router';
 import { SortConfig } from '@/components/SortingComponent';
 import { applySorting } from '@/utility';
+import Image from 'next/image';
+import debounce from 'lodash/debounce';
+
 const inter = Inter({ subsets: ['latin'] });
 
 // Global Constants
 const INITIAL_PAGE = 1;
-const SCROLL_OFFSET = 300;
+const SCROLL_OFFSET = 800;
 
 /**
  * @function handleScroll
@@ -30,20 +33,24 @@ export const useInfiniteScroll = (
   data: Query | undefined,
   fetchMore: (options?: any) => void,
 ) => {
-  const handleScroll = useCallback(() => {
+  const [lastFetchedPage, setLastFetchedPage] = useState<number | null>(null);
+
+  const handleScroll = debounce(() => {
     const windowHeight = window.innerHeight;
     const scrollTop = document.documentElement.scrollTop;
     const docHeight = document.documentElement.offsetHeight;
 
     if (windowHeight + scrollTop + SCROLL_OFFSET >= docHeight) {
       const nextPage = data?.characters?.info?.next;
-      if (nextPage) {
+
+      if (nextPage && nextPage !== lastFetchedPage) {
+        setLastFetchedPage(nextPage);
         fetchMore({
           variables: { page: nextPage },
         });
       }
     }
-  }, [data, fetchMore]);
+  }, 300); // Debounce time
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -70,9 +77,15 @@ const validateFilters = (
   for (const [key, value] of Object.entries(query)) {
     const config = filterConfigs.find(cfg => cfg.key === key);
     if (config) {
-      const stringValue = Array.isArray(value) ? value[0] : value;
+      const stringValue = value
+        ? Array.isArray(value)
+          ? value[0].toLowerCase()
+          : value.toLowerCase()
+        : '';
       if (stringValue) {
-        const option = config.options.find(opt => opt.value === stringValue);
+        const option = config.options.find(
+          opt => opt.value.toLowerCase() === stringValue,
+        );
         if (option) {
           validFilters[key] = stringValue;
         }
@@ -89,7 +102,6 @@ const validateFilters = (
  * Utilizes Apollo Client's `useQuery` for data fetching and pagination.
  */
 const Home: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
   const { filterConfigs, sortConfig, setSortConfig } = useFilterStore();
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [characters, setCharacters] = useState<any[]>([]);
@@ -99,7 +111,7 @@ const Home: React.FC = () => {
     CHARACTERS_QUERY,
     {
       variables: {
-        page: currentPage,
+        page: INITIAL_PAGE,
         ...filters,
       },
       notifyOnNetworkStatusChange: true,
@@ -158,10 +170,17 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Container component="main" className={`${styles.main} ${inter.className}`}>
-      <Typography variant="h2" align="center" gutterBottom>
-        Rick and Morty Characters
-      </Typography>
+    <Container
+      component="main"
+      sx={{ justifyContent: 'center', alignItems: 'center' }}
+      className={`${styles.main} ${inter.className}`}
+    >
+      <Image
+        src="/images/title.png"
+        alt={'RickandMorty'}
+        width={600}
+        height={300}
+      />
       <FilterComponent
         filterConfigs={filterConfigs}
         onFilter={handleFilter}
@@ -169,7 +188,7 @@ const Home: React.FC = () => {
         handleSortChange={handleSortChange}
         sortConfig={sortConfig}
       />
-      <CharacterList characters={characters} />
+      <CharacterList characters={characters} loading={loading} />
     </Container>
   );
 };

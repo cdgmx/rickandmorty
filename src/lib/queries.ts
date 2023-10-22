@@ -1,27 +1,73 @@
 import { gql } from '@apollo/client';
 
+const CHARACTER_BASICS = gql`
+  fragment CharacterBasics on Character {
+    id
+    name
+    image
+  }
+`;
+
+const CHARACTER_LOCATION = gql`
+  fragment CharacterLocation on Character {
+    origin {
+      name
+      residents {
+        id
+      }
+    }
+    location {
+      name
+      residents {
+        id
+      }
+    }
+  }
+`;
+
+const CHARACTER_DETAILS = gql`
+  fragment CharacterDetails on Character {
+    ...CharacterBasics
+    status
+    species
+    type
+    gender
+    ...CharacterLocation
+    episode {
+      id
+      name
+      air_date
+      episode
+      characters {
+        id
+      }
+    }
+  }
+  ${CHARACTER_BASICS}
+  ${CHARACTER_LOCATION}
+`;
+
 export const GET_ALL_CHARACTERS = gql`
   query GetAllCharacters($page: Int!) {
     characters(page: $page) {
       results {
-        id
-        name
-        image
+        ...CharacterBasics
       }
       info {
         next
       }
     }
   }
+  ${CHARACTER_BASICS}
 `;
 
 export const GET_CHARACTER = gql`
   query GetCharacter($id: ID!) {
     character(id: $id) {
-      id
-      name
+      ...CharacterDetails
     }
   }
+  ${CHARACTER_DETAILS}
 `;
 
 export const CHARACTERS_QUERY = gql`
@@ -44,9 +90,7 @@ export const CHARACTERS_QUERY = gql`
       }
     ) {
       results {
-        id
-        name
-        image
+        ...CharacterBasics
         gender
         species
         status
@@ -56,4 +100,18 @@ export const CHARACTERS_QUERY = gql`
       }
     }
   }
+  ${CHARACTER_BASICS}
+`;
+
+export const CHARACTERS_BY_IDS_QUERY = gql`
+  query GetCharactersByIds($ids: [ID!]!) {
+    charactersByIds(ids: $ids) {
+      ...CharacterBasics
+      species
+      origin {
+        id
+      }
+    }
+  }
+  ${CHARACTER_BASICS}
 `;
