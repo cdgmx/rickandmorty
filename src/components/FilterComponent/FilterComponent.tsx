@@ -44,17 +44,17 @@ const FilterComponent: React.FC<FilterProps> = ({
     onFilter(filterState);
   }, [onFilter, filterState]);
 
-  // Handle missing or invalid props
-  if (!filterConfigs || filterConfigs.length === 0) {
-    return null;
-  }
-
   const clearFilters = useCallback(() => {
     // Reset the filter state to its initial state
     setFilterState({});
     // Call the onFilter function to update the parent component's state
     onFilter({});
   }, [onFilter, filters]);
+
+  // Handle missing or invalid props
+  if (!filterConfigs || filterConfigs.length === 0) {
+    return null;
+  }
 
   return (
     <Paper style={paperStyles} data-testid="filter-container">
