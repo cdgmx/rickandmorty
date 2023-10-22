@@ -32,12 +32,16 @@ const SortingComponent: React.FC<SortingProps> = ({
   };
 
   return (
-    <Box sx={boxStyles}>
-      <IconButton size="small" onClick={toggleSortDirection}>
+    <Box sx={boxStyles} data-testid="sort-box">
+      <IconButton
+        size="small"
+        onClick={toggleSortDirection}
+        data-testid="toggle-button"
+      >
         {sortDirection === 'ascending' ? (
-          <ArrowUpwardIcon />
+          <ArrowUpwardIcon data-testid="arrow-up-icon" />
         ) : (
-          <ArrowDownwardIcon />
+          <ArrowDownwardIcon data-testid="arrow-down-icon" />
         )}
       </IconButton>
     </Box>
