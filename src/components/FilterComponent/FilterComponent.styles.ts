@@ -1,6 +1,9 @@
 export const paperStyles = {
   padding: '16px',
   marginBottom: '16px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  display: 'flex',
 };
 
 export const formControlStyles = {

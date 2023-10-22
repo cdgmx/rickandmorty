@@ -28,7 +28,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   filters,
   handleSortChange,
   sortConfig,
-}) => {
+}: FilterProps) => {
   const [filterState, setFilterState] =
     useState<Record<string, string>>(filters);
 
