@@ -11,6 +11,8 @@ import FilterComponent, { FilterConfig } from '@/components/FilterComponent';
 import { useFilterStore } from '@/store';
 import { ParsedUrlQuery } from 'querystring';
 import { useRouter } from 'next/router';
+import { SortConfig } from '@/components/SortingComponent';
+import { applySorting } from '@/utility';
 const inter = Inter({ subsets: ['latin'] });
 
 // Global Constants
@@ -88,8 +90,9 @@ const validateFilters = (
  */
 const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
-  const { filterConfigs } = useFilterStore();
+  const { filterConfigs, sortConfig, setSortConfig } = useFilterStore();
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [characters, setCharacters] = useState<any[]>([]);
   const client = useApolloClient();
   const router = useRouter();
   const { loading, error, data, fetchMore, refetch } = useQuery<Query>(
@@ -103,7 +106,6 @@ const Home: React.FC = () => {
     },
   );
 
-  const characters = data?.characters?.results ?? [];
   const handleFilter = async (newFilters: any) => {
     await client.clearStore();
     setFilters(newFilters);
@@ -115,7 +117,19 @@ const Home: React.FC = () => {
     refetch({ ...newFilters }); // Use refetch from useQuery
   };
 
+  const handleSortChange = (value: SortConfig) => {
+    setSortConfig(value);
+    const sortedCharacters = applySorting(characters, value);
+    setCharacters(sortedCharacters);
+  };
+
   useInfiniteScroll(data, fetchMore);
+
+  useEffect(() => {
+    const characters = data?.characters?.results ?? [];
+    const sortedCharacters = applySorting(characters, sortConfig);
+    setCharacters(sortedCharacters);
+  }, [data, sortConfig]);
 
   useEffect(() => {
     const initialFilters = validateFilters(router.query, filterConfigs);
@@ -132,8 +146,7 @@ const Home: React.FC = () => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, [router.query]);
-
+  }, [router.query, filterConfigs, router.events]);
   if (error) {
     return <p>Error loading data. Please try again later.</p>;
   }
@@ -153,6 +166,8 @@ const Home: React.FC = () => {
         filterConfigs={filterConfigs}
         onFilter={handleFilter}
         filters={filters}
+        handleSortChange={handleSortChange}
+        sortConfig={sortConfig}
       />
       <CharacterList characters={characters} />
     </Container>

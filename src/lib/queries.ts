@@ -47,6 +47,9 @@ export const CHARACTERS_QUERY = gql`
         id
         name
         image
+        gender
+        species
+        status
       }
       info {
         next

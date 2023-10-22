@@ -4,10 +4,13 @@ export const paperStyles = {
 };
 
 export const formControlStyles = {
-  minWidth: 120,
+  minWidth: 150,
   marginRight: 1,
+  flexDirection: 'row',
 };
 
 export const buttonStyles = {
   height: '100%',
 };
+
+export const selectStyles = { flexGrow: 1 };

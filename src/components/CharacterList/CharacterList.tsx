@@ -13,8 +13,8 @@ const CharacterList: React.FC<{ characters: Character[] }> = ({
 }) => {
   return (
     <Grid container spacing={2}>
-      {characters.map(character => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={character.id}>
+      {characters.map((character, index) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
           <CharacterCard
             title={character.name || ''}
             image={character.image || ''}

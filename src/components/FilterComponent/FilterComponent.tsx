@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Button,
   Select,
@@ -7,11 +7,13 @@ import {
   InputLabel,
   Paper,
 } from '@mui/material';
-import { FilterProps, FilterConfig } from './FilterComponent.types';
+import { FilterProps } from './FilterComponent.types';
+import SortingComponent from '../SortingComponent';
 import {
   paperStyles,
   formControlStyles,
   buttonStyles,
+  selectStyles,
 } from './FilterComponent.styles';
 
 const EMPTY_STRING = '';
@@ -24,6 +26,8 @@ const FilterComponent: React.FC<FilterProps> = ({
   filterConfigs = [],
   onFilter,
   filters,
+  handleSortChange,
+  sortConfig,
 }) => {
   const [filterState, setFilterState] =
     useState<Record<string, string>>(filters);
@@ -61,6 +65,7 @@ const FilterComponent: React.FC<FilterProps> = ({
               onChange={e => handleFilterChange(key, e.target.value as string)}
               autoWidth
               label={label}
+              sx={selectStyles}
             >
               {options.map(option => (
                 <MenuItem key={option.value} value={option.value}>
@@ -68,6 +73,13 @@ const FilterComponent: React.FC<FilterProps> = ({
                 </MenuItem>
               ))}
             </Select>
+            {!filterState[key] ? (
+              <SortingComponent
+                onSortChange={handleSortChange}
+                filterKey={key}
+                sortConfig={sortConfig}
+              />
+            ) : null}
           </FormControl>
         );
       })}
