@@ -1,4 +1,4 @@
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/cdgmx/rickandmorty//nextjs.yml?branch=main)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/cdgmx/rickandmorty/nextjs.yml)
 [![codecov](https://codecov.io/gh/cdgmx/rickandmorty/branch/main/graph/badge.svg?token=CODECOV_TOKEN)](https://codecov.io/gh/cdgmx/rickandmorty)
 ![GitHub last commit](https://img.shields.io/github/last-commit/cdgmx/rickandmorty)
 
