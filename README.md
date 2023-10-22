@@ -117,10 +117,6 @@ Open your web browser and navigate to `http://localhost:3000` to see the applica
 
 - [Docker Official Documentation](https://docs.docker.com/)
 
-```
-
-```
-
 ## Project Structure Overview
 
 ```
