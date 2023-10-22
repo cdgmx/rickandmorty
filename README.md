@@ -59,3 +59,65 @@ To learn more about the technologies used in this project, take a look at the fo
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Certainly, here's a comprehensive Markdown documentation specifically for setting up and running your "rickandmorty" Next.js project in a Docker environment. This guide assumes that Docker is already installed on the machine. If not, the user can download and install Docker from [Docker's official website](https://docs.docker.com/get-docker/).
+
+````markdown
+# Rick and Morty Next.js App - Docker Setup Guide
+
+## Prerequisites
+
+- Docker installed on your machine. If not, download and install from [here](https://docs.docker.com/get-docker/).
+
+## Steps to Setup and Run the Project
+
+### Step 1: Clone the Repository
+
+First, clone the repository to your local machine.
+
+```bash
+git clone https://github.com/yourusername/rickandmorty.git
+```
+````
+
+### Step 2: Navigate to Project Directory
+
+Navigate to the project directory where the `Dockerfile` is located.
+
+```bash
+cd rickandmorty
+```
+
+### Step 3: Build the Docker Image
+
+Run the following command to build the Docker image. Replace `rickandmorty-image` with the name you want to give to the Docker image.
+
+```bash
+docker build -t rickandmorty-image .
+```
+
+### Step 4: Run the Docker Container
+
+After the image is built, run the following command to start a container. This will also start the Next.js app inside the container.
+
+```bash
+docker run -p 3000:3000 rickandmorty-image
+```
+
+### Step 5: Access the App
+
+Open your web browser and navigate to `http://localhost:3000` to see the application running.
+
+## Troubleshooting
+
+- **Docker Daemon Not Running**: If you encounter an error that says "Cannot connect to the Docker daemon", make sure the Docker service is running. You can refer to [this guide](https://docs.docker.com/config/daemon/#start-the-daemon-manually) for more details.
+
+- **Port Already in Use**: If you see an error like "port is already allocated", make sure no other services are running on port 3000 or run the container on a different port by changing the `-p` flag like so: `docker run -p 3001:3000 rickandmorty-image`.
+
+## Additional Resources
+
+- [Docker Official Documentation](https://docs.docker.com/)
+
+```
+
+```
