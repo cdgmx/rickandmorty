@@ -49,7 +49,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   }
 
   return (
-    <Paper style={paperStyles}>
+    <Paper style={paperStyles} data-testid="filter-container">
       {filterConfigs.map(config => {
         const { label, key, options } = config;
 
@@ -58,17 +58,26 @@ const FilterComponent: React.FC<FilterProps> = ({
         }
 
         return (
-          <FormControl key={key} sx={formControlStyles}>
-            <InputLabel>{label}</InputLabel>
+          <FormControl
+            key={key}
+            sx={formControlStyles}
+            data-testid={`filter-control-${key}`}
+          >
+            <InputLabel data-testid={`filter-label-${key}`}>{label}</InputLabel>
             <Select
               value={filterState[key] ?? EMPTY_STRING}
               onChange={e => handleFilterChange(key, e.target.value as string)}
               autoWidth
               label={label}
               sx={selectStyles}
+              data-testid={`filter-select-${key}`}
             >
               {options.map(option => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                  data-testid={`filter-option-${option.value}`}
+                >
                   {option.label}
                 </MenuItem>
               ))}
@@ -78,6 +87,7 @@ const FilterComponent: React.FC<FilterProps> = ({
                 onSortChange={handleSortChange}
                 filterKey={key}
                 sortConfig={sortConfig}
+                data-testid={`sorting-component-${key}`}
               />
             ) : null}
           </FormControl>
@@ -88,6 +98,7 @@ const FilterComponent: React.FC<FilterProps> = ({
         variant="contained"
         color="primary"
         onClick={handleFilter}
+        data-testid="filter-button"
       >
         Filter
       </Button>

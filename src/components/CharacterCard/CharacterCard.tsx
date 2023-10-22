@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
-  Container,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { CharacterCardProps } from './CharacterCard.types';
@@ -58,8 +57,11 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   };
 
   return (
-    <StyledCard>
-      <CardActionArea onClick={() => handleCardClick()}>
+    <StyledCard data-testid="card-container">
+      <CardActionArea
+        data-testid="card-action-area"
+        onClick={() => handleCardClick()}
+      >
         <CardMedia
           component="img"
           image={image}
@@ -69,11 +71,13 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             setOpen(true);
           }}
           sx={cardMediaStyles}
+          data-testid="card-media"
         />
         <CardContent
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           sx={cardContentStyles}
+          data-testid="card-content"
         >
           <Link href={`/characters/${id}`}>
             <Typography
@@ -81,22 +85,37 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
               component="div"
               sx={titleTypographyStyles}
               ref={textRef}
+              data-testid="card-title"
             >
               {title}
             </Typography>
           </Link>
-          <Typography variant="subtitle1" color="textSecondary">
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            data-testid="card-secondary-text"
+          >
             {secondaryText}
           </Typography>
-          <Typography variant="body2">{description}</Typography>
+          <Typography variant="body2" data-testid="card-description">
+            {description}
+          </Typography>
         </CardContent>
       </CardActionArea>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogContent>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        data-testid="card-dialog"
+      >
+        <DialogContent data-testid="dialog-content">
           <img src={image} alt={title} style={{ width: '100%' }} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)} color="primary">
+        <DialogActions data-testid="dialog-actions">
+          <Button
+            onClick={() => setOpen(false)}
+            color="primary"
+            data-testid="dialog-close-button"
+          >
             Close
           </Button>
         </DialogActions>

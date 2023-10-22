@@ -13,11 +13,20 @@ const CharacterList: React.FC<CharacterListProps> = ({
   loading,
 }) => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} data-testid="character-list">
       {characters.map((character, index) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          lg={3}
+          key={index}
+          data-testid={`character-item-${index}`}
+        >
           <CharacterCard
             id={character.id || ''}
+            data-testid="character-card"
             title={character.name || ''}
             image={character.image || ''}
             secondaryText={character.species || ''}
