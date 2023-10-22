@@ -61,13 +61,15 @@ describe('Home', () => {
     expect(getByTestId('loading-component')).toBeTruthy();
   });
 
-  it('renders character list on successful fetch', async () => {
-    const { getByText } = render(
+  test('it should display the Rick and Morty image', async () => {
+    const { findByAltText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Home />
       </MockedProvider>,
     );
 
-    await waitFor(() => getByText('Rick and Morty Characters'));
+    const image = await findByAltText('RickandMorty');
+
+    expect(image).toBeInTheDocument();
   });
 });

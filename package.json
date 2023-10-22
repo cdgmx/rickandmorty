@@ -34,6 +34,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.5.5",
+    "@types/lodash": "^4.14.200",
     "@types/react": "18.2.21",
     "eslint": "^8.52.0",
     "eslint-config-next": "^13.5.6",

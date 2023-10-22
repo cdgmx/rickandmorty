@@ -6,6 +6,8 @@ describe('useInfiniteScroll', () => {
   let queryData;
 
   beforeEach(() => {
+    jest.useFakeTimers(); // Use fake timers
+
     fetchMoreMock = jest.fn();
     queryData = {
       characters: {
@@ -33,6 +35,10 @@ describe('useInfiniteScroll', () => {
     });
   });
 
+  afterEach(() => {
+    jest.useRealTimers(); // Reset timers after each test
+  });
+
   it('should call fetchMore when scrolled to the bottom', () => {
     const { result } = renderHook(() =>
       useInfiniteScroll(queryData, fetchMoreMock),
@@ -41,6 +47,10 @@ describe('useInfiniteScroll', () => {
     act(() => {
       // Simulate scroll event
       window.dispatchEvent(new Event('scroll'));
+    });
+
+    act(() => {
+      jest.runAllTimers(); // Run all timers to account for debounce
     });
 
     expect(fetchMoreMock).toHaveBeenCalled();
