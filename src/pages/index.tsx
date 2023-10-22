@@ -146,7 +146,7 @@ const Home: React.FC = () => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, [router.query, filterConfigs, router.events]);
+  }, [router.query]);
   if (error) {
     return <p>Error loading data. Please try again later.</p>;
   }
