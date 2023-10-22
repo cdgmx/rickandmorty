@@ -76,7 +76,7 @@ Certainly, here's a comprehensive Markdown documentation specifically for settin
 First, clone the repository to your local machine.
 
 ```bash
-git clone https://github.com/yourusername/rickandmorty.git
+git clone https://github.com/cdgmx/rickandmorty.git
 ```
 
 ### Step 2: Navigate to Project Directory
