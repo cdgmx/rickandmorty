@@ -8,10 +8,13 @@ import {
   Paper,
 } from '@mui/material';
 import { FilterProps, FilterConfig } from './FilterComponent.types';
+import {
+  paperStyles,
+  formControlStyles,
+  buttonStyles,
+} from './FilterComponent.styles';
 
 const EMPTY_STRING = '';
-const MIN_FORM_CONTROL_WIDTH = 120;
-const MARGIN_RIGHT = 1;
 
 /**
  * FilterComponent - A filter UI component.
@@ -42,7 +45,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   }
 
   return (
-    <Paper style={{ padding: '16px', marginBottom: '16px' }}>
+    <Paper style={paperStyles}>
       {filterConfigs.map(config => {
         const { label, key, options } = config;
 
@@ -51,10 +54,7 @@ const FilterComponent: React.FC<FilterProps> = ({
         }
 
         return (
-          <FormControl
-            key={key}
-            sx={{ minWidth: MIN_FORM_CONTROL_WIDTH, marginRight: MARGIN_RIGHT }}
-          >
+          <FormControl key={key} sx={formControlStyles}>
             <InputLabel>{label}</InputLabel>
             <Select
               value={filterState[key] ?? EMPTY_STRING}
@@ -71,7 +71,12 @@ const FilterComponent: React.FC<FilterProps> = ({
           </FormControl>
         );
       })}
-      <Button variant="contained" color="primary" onClick={handleFilter}>
+      <Button
+        sx={buttonStyles}
+        variant="contained"
+        color="primary"
+        onClick={handleFilter}
+      >
         Filter
       </Button>
     </Paper>
