@@ -6,6 +6,7 @@ import {
   FormControl,
   InputLabel,
   Paper,
+  ButtonGroup,
 } from '@mui/material';
 import { FilterProps } from './FilterComponent.types';
 import SortingComponent from '../SortingComponent';
@@ -47,6 +48,13 @@ const FilterComponent: React.FC<FilterProps> = ({
   if (!filterConfigs || filterConfigs.length === 0) {
     return null;
   }
+
+  const clearFilters = useCallback(() => {
+    // Reset the filter state to its initial state
+    setFilterState({});
+    // Call the onFilter function to update the parent component's state
+    onFilter({});
+  }, [onFilter, filters]);
 
   return (
     <Paper style={paperStyles} data-testid="filter-container">
@@ -93,15 +101,26 @@ const FilterComponent: React.FC<FilterProps> = ({
           </FormControl>
         );
       })}
-      <Button
-        sx={buttonStyles}
-        variant="contained"
-        color="primary"
-        onClick={handleFilter}
-        data-testid="filter-button"
-      >
-        Filter
-      </Button>
+      <ButtonGroup>
+        <Button
+          sx={buttonStyles}
+          variant="contained"
+          color="primary"
+          onClick={handleFilter}
+          data-testid="filter-button"
+        >
+          Filter
+        </Button>
+        <Button
+          sx={buttonStyles}
+          variant="outlined"
+          color="warning"
+          onClick={clearFilters}
+          data-testid="clear-filter-button"
+        >
+          Clear Filters
+        </Button>
+      </ButtonGroup>
     </Paper>
   );
 };
