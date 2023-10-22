@@ -62,8 +62,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Certainly, here's a comprehensive Markdown documentation specifically for setting up and running your "rickandmorty" Next.js project in a Docker environment. This guide assumes that Docker is already installed on the machine. If not, the user can download and install Docker from [Docker's official website](https://docs.docker.com/get-docker/).
 
-````markdown
-# Rick and Morty Next.js App - Docker Setup Guide
+
+### Docker Setup Guide
 
 ## Prerequisites
 
@@ -78,7 +78,6 @@ First, clone the repository to your local machine.
 ```bash
 git clone https://github.com/yourusername/rickandmorty.git
 ```
-````
 
 ### Step 2: Navigate to Project Directory
 
