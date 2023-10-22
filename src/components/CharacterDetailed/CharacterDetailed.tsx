@@ -53,7 +53,10 @@ const CharacterDetails: React.FC<CharacterDetailsProps> = ({ character }) => {
   ];
 
   const renderChipDetail = ([label, value, color, link]: ChipDetail) => (
-    <Box sx={{ display: 'flex', flexDirection: 'row', margin: '8px 0' }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'row', margin: '8px 0' }}
+      key={label + value}
+    >
       <Typography
         variant="subtitle1"
         color="textPrimary"

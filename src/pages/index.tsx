@@ -170,7 +170,11 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Container component="main" className={`${styles.main} ${inter.className}`}>
+    <Container
+      component="main"
+      sx={{ justifyContent: 'center', alignItems: 'center' }}
+      className={`${styles.main} ${inter.className}`}
+    >
       <Image
         src="/images/title.png"
         alt={'RickandMorty'}
