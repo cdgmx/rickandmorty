@@ -32,17 +32,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       notFound: true,
     };
   }
+  try {
+    const { data } = await client.query<Query>({
+      query: GET_CHARACTER,
+      variables: { id },
+    });
 
-  const { data } = await client.query<Query>({
-    query: GET_CHARACTER,
-    variables: { id },
-  });
-
-  return {
-    props: {
-      character: data.character,
-    },
-  };
+    return {
+      props: {
+        character: data.character,
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 interface CharacterPageProps {
