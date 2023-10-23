@@ -1,12 +1,10 @@
-import './globals.css';
 import React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import createApolloClient from '@/lib/apolloClient';
 import { ApolloProvider } from '@apollo/client';
-
-const theme = createTheme();
+import { theme } from '@/styles';
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   const apolloClient = createApolloClient();
