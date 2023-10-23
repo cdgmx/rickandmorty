@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent, screen, cleanup } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, cleanup } from '@testing-library/react';
 import FilterComponent from './FilterComponent';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 describe('FilterComponent', () => {
   const mockOnFilter = jest.fn();
@@ -33,38 +33,46 @@ describe('FilterComponent', () => {
   });
 
   it('should render filter options', () => {
+    const theme = createTheme();
     render(
-      <FilterComponent
-        filterConfigs={filterConfigs}
-        onFilter={mockOnFilter}
-        filters={filters}
-        handleSortChange={mockHandleSortChange}
-        sortConfig={sortConfig}
-      />,
+      <ThemeProvider theme={theme}>
+        <FilterComponent
+          filterConfigs={filterConfigs}
+          onFilter={mockOnFilter}
+          filters={filters}
+          handleSortChange={mockHandleSortChange}
+          sortConfig={sortConfig}
+        />
+      </ThemeProvider>,
     );
     expect(screen.getByTestId('filter-control-category')).toBeInTheDocument();
   });
 
   it('should handle missing or invalid props', () => {
+    const theme = createTheme();
     const { rerender } = render(
-      <FilterComponent
-        filterConfigs={[]}
-        onFilter={mockOnFilter}
-        filters={filters}
-        handleSortChange={mockHandleSortChange}
-        sortConfig={sortConfig}
-      />,
+      <ThemeProvider theme={theme}>
+        <FilterComponent
+          filterConfigs={[]}
+          onFilter={mockOnFilter}
+          filters={filters}
+          handleSortChange={mockHandleSortChange}
+          sortConfig={sortConfig}
+        />
+      </ThemeProvider>,
     );
     expect(screen.queryByTestId('filter-container')).not.toBeInTheDocument();
 
     rerender(
-      <FilterComponent
-        filterConfigs={null}
-        onFilter={mockOnFilter}
-        filters={filters}
-        handleSortChange={mockHandleSortChange}
-        sortConfig={sortConfig}
-      />,
+      <ThemeProvider theme={theme}>
+        <FilterComponent
+          filterConfigs={null}
+          onFilter={mockOnFilter}
+          filters={filters}
+          handleSortChange={mockHandleSortChange}
+          sortConfig={sortConfig}
+        />
+      </ThemeProvider>,
     );
     expect(screen.queryByTestId('filter-container')).not.toBeInTheDocument();
   });

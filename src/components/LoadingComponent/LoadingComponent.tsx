@@ -9,11 +9,6 @@ const LoadingComponent = () => {
       height="100vh"
       data-testid="loading-component"
     >
-      <img
-        src="/images/portal.gif"
-        alt="My Animation"
-        style={{ height: '400px' }}
-      />
       <Typography variant="h6">Please Wait</Typography>
     </Box>
   );

@@ -31,6 +31,7 @@ const CharacterList: React.FC<CharacterListProps> = ({
             image={character.image || ''}
             secondaryText={character.species || ''}
             description={character.status || ''}
+            gender={character.gender || ''}
           />
         </Grid>
       ))}

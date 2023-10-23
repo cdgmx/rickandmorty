@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import styles from './page.module.css';
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useQuery, useApolloClient } from '@apollo/client';
 import { CHARACTERS_QUERY } from '@/lib/queries';
 import { Query } from '@/types';
@@ -172,15 +171,22 @@ const Home: React.FC = () => {
   return (
     <Container
       component="main"
-      sx={{ justifyContent: 'center', alignItems: 'center' }}
-      className={`${styles.main} ${inter.className}`}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
     >
-      <Image
-        src="/images/title.png"
-        alt={'RickandMorty'}
-        width={600}
-        height={300}
-      />
+      <Box sx={{ maxWidth: 600, minWidth: 200, overflow: 'hidden' }}>
+        <Image
+          src="/images/title.png"
+          alt="RickandMorty"
+          width={300}
+          height={150}
+          layout="responsive"
+        />
+      </Box>
       <FilterComponent
         filterConfigs={filterConfigs}
         onFilter={handleFilter}
