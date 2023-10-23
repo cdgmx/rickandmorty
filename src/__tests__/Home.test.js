@@ -59,7 +59,6 @@ describe('Home', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <Home />
         </MockedProvider>
-        ,
       </ThemeProvider>,
     );
 
