@@ -94,10 +94,13 @@ const theme = createTheme({
         margin: 0;
       }
       
-      html,
+      html{
+        overflow-y: scroll;
+      }
       body {
         max-width: 100vw;
         overflow-x: hidden;
+
       }
       
       body {
