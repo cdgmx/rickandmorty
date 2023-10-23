@@ -1,1 +1,3 @@
-export const boxStyles = { display: 'flex', alignItems: 'center' };
+export const boxStyles = {
+  display: 'flex',
+};

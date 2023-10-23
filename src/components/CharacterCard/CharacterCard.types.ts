@@ -4,6 +4,7 @@ export type CharacterCardProps = {
   title: string;
   secondaryText: string;
   description: string;
+  gender: string;
   onAction1?: () => void;
   onAction2?: () => void;
 };

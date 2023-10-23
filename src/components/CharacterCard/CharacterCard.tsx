@@ -30,6 +30,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
   title,
   secondaryText,
   description,
+  gender,
 }) => {
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -95,10 +96,13 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             color="textSecondary"
             data-testid="card-secondary-text"
           >
-            {secondaryText}
+            Species: {secondaryText}
           </Typography>
           <Typography variant="body2" data-testid="card-description">
-            {description}
+            Status: {description}
+          </Typography>
+          <Typography variant="body2" data-testid="card-description">
+            Gender: {gender}
           </Typography>
         </CardContent>
       </CardActionArea>

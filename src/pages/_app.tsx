@@ -2,19 +2,27 @@ import './globals.css';
 import React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-
+import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import createApolloClient from '@/lib/apolloClient';
 import { ApolloProvider } from '@apollo/client';
+
+const theme = createTheme();
 
 function App({ Component, pageProps }: AppProps): JSX.Element {
   const apolloClient = createApolloClient();
   return (
     <ApolloProvider client={apolloClient}>
-      <Head>
-        <title>Rick and Morty</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Head>
+          <title>Rick and Morty</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <Component {...pageProps} />
+      </ThemeProvider>
     </ApolloProvider>
   );
 }

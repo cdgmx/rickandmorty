@@ -7,6 +7,9 @@ import {
   InputLabel,
   Paper,
   ButtonGroup,
+  Grid,
+  useMediaQuery,
+  Theme,
 } from '@mui/material';
 import { FilterProps } from './FilterComponent.types';
 import SortingComponent from '../SortingComponent';
@@ -16,6 +19,7 @@ import {
   buttonStyles,
   selectStyles,
 } from './FilterComponent.styles';
+import { useResponsiveButtonSize } from '@/hooks/responsive';
 
 const EMPTY_STRING = '';
 
@@ -32,6 +36,8 @@ const FilterComponent: React.FC<FilterProps> = ({
 }: FilterProps) => {
   const [filterState, setFilterState] =
     useState<Record<string, string>>(filters);
+
+  const buttonSize = useResponsiveButtonSize();
 
   const handleFilterChange = useCallback((key: string, value: string) => {
     setFilterState(prevState => ({
@@ -58,69 +64,89 @@ const FilterComponent: React.FC<FilterProps> = ({
 
   return (
     <Paper style={paperStyles} data-testid="filter-container">
-      {filterConfigs.map(config => {
-        const { label, key, options } = config;
+      <Grid
+        container
+        sx={{ gap: 1, display: 'flex', justifyContent: 'center' }}
+      >
+        {filterConfigs.map(config => {
+          const { label, key, options } = config;
 
-        if (!label || !Array.isArray(options) || options.length === 0) {
-          return null;
-        }
+          if (!label || !Array.isArray(options) || options.length === 0) {
+            return null;
+          }
 
-        return (
-          <FormControl
-            key={key}
-            sx={formControlStyles}
-            data-testid={`filter-control-${key}`}
-          >
-            <InputLabel data-testid={`filter-label-${key}`}>{label}</InputLabel>
-            <Select
-              value={filterState[key] ?? EMPTY_STRING}
-              onChange={e => handleFilterChange(key, e.target.value as string)}
-              autoWidth
-              label={label}
-              sx={selectStyles}
-              data-testid={`filter-select-${key}`}
+          return (
+            <FormControl
+              key={key}
+              sx={formControlStyles}
+              data-testid={`filter-control-${key}`}
+              size={'small'}
             >
-              {options.map(option => (
-                <MenuItem
-                  key={option.value}
-                  value={option.value}
-                  data-testid={`filter-option-${option.value}`}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-            {!filterState[key] ? (
-              <SortingComponent
-                onSortChange={handleSortChange}
-                filterKey={key}
-                sortConfig={sortConfig}
-                data-testid={`sorting-component-${key}`}
-              />
-            ) : null}
-          </FormControl>
-        );
-      })}
-      <ButtonGroup>
-        <Button
-          sx={buttonStyles}
-          variant="contained"
-          color="primary"
-          onClick={handleFilter}
-          data-testid="filter-button"
+              <InputLabel data-testid={`filter-label-${key}`}>
+                {label}
+              </InputLabel>
+              <Select
+                value={filterState[key] ?? EMPTY_STRING}
+                onChange={e =>
+                  handleFilterChange(key, e.target.value as string)
+                }
+                autoWidth
+                label={label}
+                sx={selectStyles}
+                data-testid={`filter-select-${key}`}
+              >
+                {options.map(option => (
+                  <MenuItem
+                    key={option.value}
+                    value={option.value}
+                    data-testid={`filter-option-${option.value}`}
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+              {!filterState[key] ? (
+                <SortingComponent
+                  onSortChange={handleSortChange}
+                  filterKey={key}
+                  sortConfig={sortConfig}
+                  data-testid={`sorting-component-${key}`}
+                />
+              ) : null}
+            </FormControl>
+          );
+        })}
+
+        <ButtonGroup
+          sx={{
+            display: 'flex',
+
+            height: '100%',
+            justifyContent: 'center',
+          }}
         >
-          Filter
-        </Button>
-        <Button
-          sx={buttonStyles}
-          variant="outlined"
-          color="warning"
-          onClick={clearFilters}
-          data-testid="clear-filter-button"
-        >
-          Clear Filters
-        </Button>
-      </ButtonGroup>
+          <Button
+            size={buttonSize}
+            sx={buttonStyles}
+            variant="contained"
+            color="primary"
+            onClick={handleFilter}
+            data-testid="filter-button"
+          >
+            Filter
+          </Button>
+          <Button
+            size={buttonSize}
+            sx={buttonStyles}
+            variant="outlined"
+            color="warning"
+            onClick={clearFilters}
+            data-testid="clear-filter-button"
+          >
+            Clear
+          </Button>
+        </ButtonGroup>
+      </Grid>
     </Paper>
   );
 };
