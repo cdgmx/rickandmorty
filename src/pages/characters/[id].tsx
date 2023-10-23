@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { Character, Query } from '@/types';
 import { GET_CHARACTER, CHARACTERS_BY_IDS_QUERY } from '@/lib/queries';
 import createApolloClient from '@/lib/apolloClient';
@@ -13,10 +13,19 @@ import RecommendedCharacters, {
 } from '@/components/RecommendedCharacters';
 
 const MAX_RECOMMENDED_CHARACTERS = 10;
+const MAX_CHARACTERS_FETCH = 826;
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  let paths: any[] = [];
+  for (let i = 1; i <= MAX_CHARACTERS_FETCH; i++) {
+    paths.push({ params: { id: String(i) } });
+  }
+  return { paths, fallback: 'blocking' };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = createApolloClient();
-  const id = context.params?.id;
+  const id = params?.id;
 
   if (typeof id !== 'string') {
     return {

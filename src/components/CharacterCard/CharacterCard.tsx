@@ -101,7 +101,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
           <Typography variant="body2" data-testid="card-description">
             Status: {description}
           </Typography>
-          <Typography variant="body2" data-testid="card-description">
+          <Typography variant="body2" data-testid="card-gender">
             Gender: {gender}
           </Typography>
         </CardContent>

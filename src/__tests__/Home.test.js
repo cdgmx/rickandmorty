@@ -3,7 +3,7 @@ import { render, waitFor } from '@testing-library/react';
 import Home from '@/pages/index';
 import { MockedProvider } from '@apollo/client/testing';
 import { CHARACTERS_QUERY } from '@/lib/queries';
-import { useRouter } from 'next/router';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 jest.mock('next/router', () => ({
   useRouter: () => ({
@@ -52,20 +52,28 @@ const mocks = [
 
 describe('Home', () => {
   it('renders loading state initially', () => {
+    const theme = createTheme();
+
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Home />
-      </MockedProvider>,
+      <ThemeProvider theme={theme}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Home />
+        </MockedProvider>
+        ,
+      </ThemeProvider>,
     );
 
     expect(getByTestId('loading-component')).toBeTruthy();
   });
 
   test('it should display the Rick and Morty image', async () => {
+    const theme = createTheme();
     const { findByAltText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Home />
-      </MockedProvider>,
+      <ThemeProvider theme={theme}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Home />
+        </MockedProvider>
+      </ThemeProvider>,
     );
 
     const image = await findByAltText('RickandMorty');
